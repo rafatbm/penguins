@@ -1,0 +1,66 @@
+---
+title: "penguins"
+author: "Rafael Tobias Miras"
+date: "2024-09-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instalando paquetes y cargando librerias
+
+```{r}
+install.packages('tidyverse')
+install.packages('palmerpenguins')
+install.packages('ggthemes')
+
+library(tidyverse)
+library(palmerpenguins)
+library(ggthemes)
+```
+
+
+# Cargamos el df y visualizamos el contenido
+```{r}
+penguins <- palmerpenguins::penguins
+```
+
+```{r}
+View(penguins)
+glimpse(penguins)
+str(penguins)
+```
+
+
+## Gráficos
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = flipper_length_mm, y = body_mass_g, )
+) + geom_point()
+```
+
+## Añadimos colores por especies
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = flipper_length_mm, y = body_mass_g, color = species)
+) + geom_point()
+```
+
+## Añadimos curva que demuestre la relación entre body_mass y flipper_length
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = flipper_length_mm, y = body_mass_g, color = species)
+) + 
+        geom_point() +
+        geom_smooth(method = "lm")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
