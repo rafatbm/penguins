@@ -52,7 +52,7 @@ ggplot(
 ) + geom_point()
 ```
 
-## Añadimos curva que demuestre la relación entre body_mass y flipper_length
+## Añadimos curva que muestre la relación entre body_mass y flipper_length para cada especie
 
 ```{r}
 ggplot(
@@ -63,4 +63,43 @@ ggplot(
         geom_smooth(method = "lm")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Unimos la lineas en una sola aunque no acaba de estar perfectamente definida.
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = flipper_length_mm, y = body_mass_g)
+) + 
+        geom_point(mapping = aes(color = species)) +
+        geom_smooth(method = "lm")
+```
+
+A parte de indicar un color por especie es conveniente incluir una forma diferente por especie para facilitar la visualización a
+personas con dificultades visuales como pueden ser el daltonismo, añadimos "shape = species" en geom_point
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = flipper_length_mm, y = body_mass_g)
+) + 
+        geom_point(mapping = aes(color = species, shape = species)) +
+        geom_smooth(method = "lm")
+```
+
+Le pones título, subtítulo y nombre a los ejes.
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = flipper_length_mm, y = body_mass_g)
+) + 
+        geom_point(mapping = aes(color = species, shape = species)) +
+        geom_smooth(method = "lm") +
+        labs(
+                title = "Body mass and flipper lenght",
+                subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+                x = "Flipper lenght (mm)" , y = "Body mass (g)" ,
+                color = "Species" , shape = "Species"
+        ) +
+        scale_color_colorblind()
+```
