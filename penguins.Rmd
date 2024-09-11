@@ -103,3 +103,176 @@ ggplot(
         ) +
         scale_color_colorblind()
 ```
+
+## EXERCICIES
+
+1. How many rows are in penguins? How many columns?
+
+```{r}
+str(penguins)
+
+```
+334 rows and 8 columns
+
+
+2. What does the bill_depth_mm variable in the penguins data frame descrive? Read the help for ?penguins to dins out.
+
+The bill_depth_mm variable descrives bill depth in  millimeters (profundidad del pico in spanish)
+
+
+3. Make a scatterplot of bill_depth_mm vs bill_lenght_mm. That is, make a scatterplot with bill_depth_mm on the y-axis and bill_lenght_mm on the x-axis. Describe the relationship between the two variables
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = bill_length_mm, y = bill_depth_mm)
+) + 
+        geom_point(mapping = aes(color = species, shape = species)) +
+        geom_smooth(method = "lm") +
+        labs(
+                title = "Bill lenght and bill depth",
+                subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+                x = "Bill lenght (mm)" , y = "Bill depth (mm)" ,
+                color = "Species" , shape = "Species"
+        ) +
+        scale_color_colorblind()
+```
+We can see a negative relationship
+
+4. What happens if you make a scatterplot of species versus bill_depth_mm?
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = species, y = bill_depth_mm)
+) + 
+        geom_point(mapping = aes(color = species, shape = species)) +
+        geom_smooth(method = "lm") +
+        labs(
+                title = "Bill lenght and bill depth",
+                subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+                x = "species" , y = "Bill depth (mm)" ,
+                color = "Species" , shape = "Species"
+        ) +
+        scale_color_colorblind()
+```
+
+What might be a better choice of genom?
+
+Boxplot is better to check the result. we can check mean, quartils, outliers, etc. More info with this kind of plot
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = species, y = bill_depth_mm)
+) + 
+        geom_boxplot(mapping = aes(color = species, shape = species)) +
+        geom_smooth(method = "lm") +
+        labs(
+                title = "Bill lenght and bill depth",
+                subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+                x = "species" , y = "Bill depth (mm)" ,
+                color = "Species" , shape = "Species"
+        ) +
+        scale_color_colorblind()
+```
+
+
+5. Why does the following give an error, and how would you fix it?
+
+```{r}
+ggplot(data = penguins) +
+        geom_point()
+```
+
+The plot requires values for x and y
+
+6. Why does the na.rm argument do in geom_point()? What is the default value of the argument? Create a scatterplot where you succesfully use this arguments ser to TRUE
+
+The default value for the argument na.rm is FALSE. If it's TRUE it'll remove the NA values and with a warning. If it's TRUE it'll remove the NA values silently
+
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = bill_length_mm, y = bill_depth_mm)
+) + 
+        geom_point(mapping = aes(color = species, shape = species, na.rm = TRUE)) +
+        geom_smooth(method = "lm") +
+        labs(
+                title = "Bill lenght and bill depth",
+                subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+                x = "Bill lenght (mm)" , y = "Bill depth (mm)" ,
+                color = "Species" , shape = "Species"
+        ) +
+        scale_color_colorblind()
+```
+
+7. Add the following caption to the plot you made in the previous excercise: "Data come from the palmerpenguins package". Hint: Take a look at hte documentation for labs()
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = bill_length_mm, y = bill_depth_mm)
+) + 
+        geom_point(mapping = aes(color = species, shape = species, na.rm = TRUE)) +
+        geom_smooth(method = "lm") +
+        labs(
+                title = "Bill lenght and bill depth",
+                subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+                caption = "Data come from the palmerpenguins package",
+                x = "Bill lenght (mm)" , y = "Bill depth (mm)" ,
+                color = "Species" , shape = "Species"
+        ) +
+        scale_color_colorblind()
+
+```
+
+8. Re-create the following visualization. What aesthetic should bill_depth_mm be mapped to? And shoud be mapped at global level or at geom level?
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = flipper_length_mm, y = body_mass_g, fill = bill_depth_mm)
+) + 
+        geom_point() +
+        geom_smooth(method = "lm") +
+        labs(
+                color = "Bill depth" , shape = "Bill depth"
+        ) +
+        scale_color_colorblind()
+```
+
+9. run this code in your head and predict what the output will look like. then, run the code in R and check your predictions
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = flipper_length_mm, y = body_mass_g, color = island)
+) +
+        geom_point() +
+        geom_smooth(se = FALSE)
+```
+
+10. Will these two graphs look different? Why/why not?
+
+```{r}
+ggplot(
+        data = penguins,
+        mapping = aes(x = flipper_length_mm, y = body_mass_g)
+) +
+        geom_point() +
+        geom_smooth()
+
+```
+
+```{r}
+ggplot() +
+        geom_point(data = penguins,
+                   mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
+        geom_smooth(
+                data = penguins,
+                mapping = aes(x = flipper_length_mm, y = body_mass_g)
+        )
+```
+
