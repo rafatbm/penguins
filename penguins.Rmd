@@ -12,10 +12,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Instalando paquetes y cargando librerias
 
 ```{r}
-install.packages('tidyverse')
-install.packages('palmerpenguins')
-install.packages('ggthemes')
-
 library(tidyverse)
 library(palmerpenguins)
 library(ggthemes)
@@ -274,5 +270,45 @@ ggplot() +
                 data = penguins,
                 mapping = aes(x = flipper_length_mm, y = body_mass_g)
         )
+```
+
+## VISUALISING DISTRIBUTIONS
+
+## Categorical variable
+
+```{r}
+ggplot(penguins, aes(x = species)) + 
+geom_bar()
+```
+We are reordering levels with fct_infreq() function, trnasforming them to factor
+
+```{r}
+ggplot(penguins, aes(x = fct_infreq(species))) + 
+geom_bar()
+```
+
+
+## Numerical variable
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g)) + 
+        geom_histogram(binwidth = 200)
+```
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g)) + 
+        geom_histogram(binwidth = 20)
+```
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g)) + 
+        geom_histogram(binwidth = 2000)
+```
+
+To check the skewness
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g)) +
+        geom_density()
 ```
 
