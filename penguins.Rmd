@@ -312,3 +312,95 @@ ggplot(penguins, aes(x = body_mass_g)) +
         geom_density()
 ```
 
+## EXERCISES
+
+1. Make a barplot of species of penguins, where you assign species to the y aesthetic. How is this plot different?
+
+```{r}
+ggplot(penguins, aes(y = species)) + 
+        geom_bar()
+```
+
+2. How are the following two plots different? Which aesthetic, color or fill, is more useful for changing the color of bars?
+
+```{r}
+ggplot(penguins, aes(x = species)) +
+        geom_bar(color = "red")
+```
+
+```{r}
+ggplot(penguins, aes(x = species)) +
+        geom_bar(fill = "red")
+```
+
+3. What does the bins argument in geom_histogram() do?
+
+Agrupa mas o menos valores por intervalos. Por ejemplo podemos indicar 20 bins por lo que el histograma se nos agrupara por bloques de un intervalo de 20 en 20 del mismo tamaño. Si aumentamos el numero de bins tendremos menos barras porque los intervalos seran más grandes. En cambio si disminuimos los bins estaremos disminuyendo los intervalos y por lo general tendremos más barras.
+
+
+4. Make a histogram of the carat variable in the diamonds dataset that is available when you load the tidyverse package. Experiments with different binwith values. What value reveals the most interesting patterns?
+
+```{r}
+ggplot(diamonds, aes(x = carat)) + 
+        geom_histogram(binwidth = 10)
+```
+
+```{r}
+ggplot(diamonds, aes(x = carat)) + 
+        geom_histogram(binwidth = 1)
+```
+
+```{r}
+ggplot(diamonds, aes(x = carat)) + 
+        geom_histogram(binwidth = 0.1)
+```
+
+
+## VISUALIZING RELATIONSHIPS
+## A numerical and a categorical variable
+
+```{r}
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+        geom_boxplot()
+```
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g, color = species)) +
+        geom_density(linewith = 0.75)
+```
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) +
+        geom_density(alpha = 0.5)
+```
+
+## Two categorical variables
+
+```{r}
+ggplot(penguins, aes(x= island, fill = species)) +
+        geom_bar()
+```
+
+```{r}
+ggplot(penguins, aes(x= island, fill = species)) +
+        geom_bar(position = "fill")
+```
+
+## Two numerical variables
+
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+        geom_point()
+```
+
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+        geom_point(aes(color = species, shape = island))
+```
+
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+        geom_point(aes(color = species, shape = island)) +
+        facet_wrap(~island)
+```
+
